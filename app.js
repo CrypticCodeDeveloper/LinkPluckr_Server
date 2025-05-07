@@ -6,9 +6,21 @@ var logger = require('morgan');
 const cors = require('cors');
 var app = express();
 
+const allowedOrigins = ['http://localhost:5173'];
+
 app.use(cors({
-  origin: '*',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
 
 var indexRouter = require('./routes/index');
 
