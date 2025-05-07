@@ -10,7 +10,6 @@ app.use(cors({
   origin: '*',
 }));
 
-
 var indexRouter = require('./routes/index');
 
 // view engine setup
