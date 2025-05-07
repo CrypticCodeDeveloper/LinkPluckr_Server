@@ -9,7 +9,7 @@ const app = express();
 
 //
 app.use(cors({
-  origin: '*',
+  origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
@@ -42,7 +42,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3200;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
