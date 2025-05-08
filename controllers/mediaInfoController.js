@@ -19,8 +19,8 @@ const getPlatformLinkInfo = async (req, res) => {
     }
 
     // Fetch media info based on platform
-    try{
-        platform === allowedPlatforms[0]  ? // Tiktok
+    try {
+        platform === allowedPlatforms[0] ? // Tiktok
             rawMediaInfo = await Tiktok.Downloader(url, {
                 version: "v1"
             })
@@ -32,7 +32,12 @@ const getPlatformLinkInfo = async (req, res) => {
                         rawMediaInfo = await getFbInfo(url) :
                         rawMediaInfo = null;
     } catch (e) {
-        console.log('Error occured: ', e.message)
+        console.error('Error occurred:', e); // Log full error for debugging
+        return res.status(500).json({
+            status: 'error',
+            message: 'Failed to fetch media info',
+            error: e.message || 'Unknown error',
+        });
     }
 
 
