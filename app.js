@@ -8,12 +8,18 @@ const cors = require('cors');
 
 const app = express();
 
-//
-app.use(cors({
-  origin: '*',
+// Configure CORS
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.ALLOWED_ORIGINS?.split(',') || ['https://yourdomain.com'] 
+    : '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  maxAge: 86400 // 24 hours
+};
+
+app.use(cors(corsOptions));
 
 const indexRouter = require('./routes/index');
 
@@ -40,12 +46,6 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
   res.render('error');
-});
-
-// Start server
-const PORT = process.env.PORT || 3200;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
 });
 
 module.exports = app;
