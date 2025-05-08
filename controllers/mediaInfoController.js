@@ -19,17 +19,21 @@ const getPlatformLinkInfo = async (req, res) => {
     }
 
     // Fetch media info based on platform
-    platform === allowedPlatforms[0]  ? // Tiktok
-        rawMediaInfo = await Tiktok.Downloader(url, {
-            version: "v1"
-        })
-        : platform === allowedPlatforms[1] ? // Twitter
-        rawMediaInfo = await TwitterDL(url)
-        : platform === allowedPlatforms[2] ? // Instagram
-            rawMediaInfo = await instagramGetUrl(url)
-                : platform === allowedPlatforms[3] ?
-                    rawMediaInfo = await getFbInfo(url) :
-                rawMediaInfo = null;
+    try{
+        platform === allowedPlatforms[0]  ? // Tiktok
+            rawMediaInfo = await Tiktok.Downloader(url, {
+                version: "v1"
+            })
+            : platform === allowedPlatforms[1] ? // Twitter
+                rawMediaInfo = await TwitterDL(url)
+                : platform === allowedPlatforms[2] ? // Instagram
+                    rawMediaInfo = await instagramGetUrl(url)
+                    : platform === allowedPlatforms[3] ?
+                        rawMediaInfo = await getFbInfo(url) :
+                        rawMediaInfo = null;
+    } catch (e) {
+        console.log('Error occured: ', e.message)
+    }
 
 
     // Process the media returned
