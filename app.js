@@ -20,6 +20,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Respond to preflight
+
 
 const indexRouter = require('./routes/index');
 
