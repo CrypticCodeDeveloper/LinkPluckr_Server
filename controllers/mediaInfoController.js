@@ -193,7 +193,8 @@ function processTwitterMedia(rawMediaInfo) {
  * @returns {Object} Processed media info
  */
 function processInstagramMedia(rawMediaInfo) {
-    if (!rawMediaInfo?.media_details?.[0]) return null;
+    // if (!rawMediaInfo?.media_details?.[0]) return null;
+
 
     return {
         url: rawMediaInfo.media_details[0].url,

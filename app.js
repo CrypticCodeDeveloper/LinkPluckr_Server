@@ -8,20 +8,11 @@ const cors = require('cors');
 
 const app = express();
 
-// Configure CORS
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.ALLOWED_ORIGINS?.split(',') || ['https://yourdomain.com'] 
-    : 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+app.use(cors({
+  origin: '*',
   credentials: true,
-  maxAge: 86400 // 24 hours
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Respond to preflight
-
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+}));
 
 const indexRouter = require('./routes/index');
 
